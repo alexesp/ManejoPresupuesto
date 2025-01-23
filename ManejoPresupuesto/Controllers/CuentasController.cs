@@ -19,7 +19,7 @@ namespace ManejoPresupuesto.Controllers
        
 
         [HttpGet]
-        public async IActionResult Crear()
+        public async Task<IActionResult> Crear()
         {
             var usuarioId = _servicioUsuarios.ObtenerUsuarioId();
             var tiposCuentas = await _repositorioTiposCuentas.Obtener(usuarioId);
