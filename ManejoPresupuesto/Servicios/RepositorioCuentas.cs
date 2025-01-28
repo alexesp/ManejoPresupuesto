@@ -6,7 +6,7 @@ namespace ManejoPresupuesto.Servicios
 {
     public interface IRepositorioCuentas
     {
-
+        Task Crear(Cuenta cuenta);
     }
     public class RepositorioCuentas: IRepositorioCuentas
     {
@@ -19,7 +19,11 @@ namespace ManejoPresupuesto.Servicios
         public async Task Crear(Cuenta cuenta)
         {
             using var conn = new SqlConnection(_connectionString);
-            var id = await conn.QuerySingleAsync(@"");
+            var id = await conn.QuerySingleAsync<int>(
+                @"INSERT INTO Cuentas (Nombre, TipoCuentaId,Descripcion,Balance) VALUES
+                (@Nombre,@TipoCuentaId,@Descripcion,@Balance
+                SELECT SCOPE_INDENTITY();", cuenta);
+            cuenta.Id = id;
         }
     }
 }
