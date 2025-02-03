@@ -18,6 +18,20 @@ namespace ManejoPresupuesto.Controllers
             _repositorioTiposCuentas = repositorioTiposCuentas;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            //var usuarionId = _servicioUsuarios.ObtenerUsuarioId();
+            //var cuentasConTipoCuenta = await _repositorioCuentas.Buscar(usuarionId);
+
+            //var modelo = cuentasConTipoCuenta
+            //    .GroupBy(x => x.TipoCuenta)
+            //    .Select(grupo => new IndiceCuentasViewModel
+            //    {
+            //        TipoCuenta = grupo.Key,
+            //        Cuentas = grupo.AsEnumerable(),
+            //    }).ToList();
+            return View();
+        }
 
 
         [HttpGet]
@@ -34,8 +48,9 @@ namespace ManejoPresupuesto.Controllers
         public async Task<IActionResult> Crear(CuentaCreacionViewModel cuenta)
         {
             var usuarioId = _servicioUsuarios.ObtenerUsuarioId();
-            var tipoCuenta = await _repositorioTiposCuentas.ObtenerPorId(cuenta.Id, usuarioId);
 
+            //var tipoCuenta = await _repositorioTiposCuentas.ObtenerPorId(cuenta.Id, usuarioId);
+            var tipoCuenta = 6;
             if (tipoCuenta == null)
             {
                 return RedirectToAction("No Encontrado", "Home");
