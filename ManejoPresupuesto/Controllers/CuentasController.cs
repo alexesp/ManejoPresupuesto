@@ -63,7 +63,36 @@ namespace ManejoPresupuesto.Controllers
             await _repositorioCuentas.Crear(cuenta);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Editar(int id)
+        {
+            var usuarioId = _servicioUsuarios.ObtenerUsuarioId();
+            var cuenta = await _repositorioCuentas.ObtenerPorId(id, usuarioId);
+            if (cuenta is null)
+            {
+                return RedirectToAction("No Encontrado", "Home");
+            }
+            
+            return View(cuenta);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Editar(CuentaCreacionViewModel cuentaEditar)
+        {
+            var usuarioId = _servicioUsuarios.ObtenerUsuarioId();
+            var cuenta = await _repositorioCuentas.ObtenerPorId(cuentaEditar.Id, usuarioId);
+
+            if (cuenta is null)
+            {
+                return RedirectToAction("No Encontrado", "Home");
+            }
+            var tipoCuenta = await _repositorioTiposCuentas.ObtenerPorId(cuentaEditar.TipoCuenta, usuarioId);
+
+            if (tipoCuenta is null)
+            {
+                return RedirectToAction("No Encontrado", "Home");
+            }
+            return View(cuenta);
+        }
 
         private async Task<IEnumerable<SelectListItem>> ObtenerTiposCuentas(int usuarioId)
         {
